@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    
+    body {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    }
+    
+    #box {
+    position: relative;
+    width: 1200px;
+    height: 800px;
+    border: 10px groove orangered;
+    background-image: url(../assets/images/backgroundred.jpg);
+    margin-top: 40px;
+    }
+    
+    #title1{
+    position: absolute;
+    width: 800px;
+    top: 0;
+    left: 0;  
+    right: 0;
+    margin: auto
+    }
+    
+    #title2{
+    position: absolute;
+    width: 600px;
+    left: 0;  
+    right: 0;
+    top: 150px;
+    margin: auto
+    }
+    
+    #firebackground{
+    position: absolute;
+    width: 1180px;
+    height: 900px;
+    left: 0;  
+    right: 0;
+    top: 1;
+    bottom: 0;
+    margin: auto
+    }
+
+    #botton1{
+    background-image: url(../assets/images/firebutton.jpg);
+    border: 6px outset black;
+    position: absolute;
+    cursor:grab;
+    width: 400px;
+    height: 100px;
+    left: 0;  
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto
+    }
+    
+    #botton2{
+    background-image: url(../assets/images/firebutton.jpg);
+    border: 6px outset black;
+    cursor:grab;
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    left: 0;  
+    right: 0;
+    top: 500px;
+    margin: auto
+    }
+    
+        
+
+   
