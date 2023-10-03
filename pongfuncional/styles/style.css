@@ -13,10 +13,10 @@
     align-self: center;
     }
     
-    #box {
+    #telainicial {
     position: relative;
     width: 1200px;
-    height: 800px;
+    height: 650px;
     border: 10px groove orangered;
     background-image: url(../assets/images/backgroundred.jpg);
     margin-top: 40px;
@@ -43,7 +43,7 @@
     #firebackground{
     position: absolute;
     width: 1180px;
-    height: 900px;
+    height: 700px;
     left: 0;  
     right: 0;
     top: 1;
@@ -51,33 +51,52 @@
     margin: auto
     }
 
-    #botton1{
+    #button1{
     background-image: url(../assets/images/firebutton.jpg);
     border: 6px outset black;
     position: absolute;
-    cursor:grab;
+    cursor:pointer;
     width: 400px;
     height: 100px;
     left: 0;  
     right: 0;
-    top: 0;
-    bottom: 0;
+    top: 300px;
     margin: auto
     }
     
-    #botton2{
+    #button2{
     background-image: url(../assets/images/firebutton.jpg);
     border: 6px outset black;
-    cursor:grab;
+    cursor:pointer;
     position: absolute;
     width: 400px;
     height: 100px;
     left: 0;  
     right: 0;
-    top: 500px;
+    top: 450px;
     margin: auto
     }
     
-        
-
+    canvas {
+        background-color: black;
+        margin: 0 auto;
+    }
+    #pong {
+        margin-top: 40px;
+        border: 10px groove orangered;
+    }
+    
+    .fade-in {
+        animation: fadeIn 1s ease-in-out;
+        opacity: 1;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
    
