@@ -46,13 +46,13 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
-function playSomRaquete() {
+const playSomRaquete = () => {
     const somRaquete = document.getElementById("somRaquete");
     somRaquete.currentTime = 0;
     somRaquete.play();
 }
 
-function drawBall() {
+const drawBall = () => {
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fillStyle = "white";
@@ -60,7 +60,7 @@ function drawBall() {
     ctx.closePath();
 }
 
-function drawPaddles() {
+const drawPaddles = () => {
     ctx.fillStyle = "white";
     ctx.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
     ctx.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
@@ -85,7 +85,7 @@ document.addEventListener("keyup", function (e) {
     }
 });
 
-function movePaddles() {
+const movePaddles = () => {
     if (keys.ArrowUp && rightPaddle.y > 0) {
         rightPaddle.y -= rightPaddle.speed;
     }
@@ -99,9 +99,9 @@ function movePaddles() {
     if (keys.s && leftPaddle.y + leftPaddle.height < canvas.height) {
         leftPaddle.y += leftPaddle.speed;
     }
-}
+};
 
-function updateBall() {
+const updateBall = () => {
     ball.x += ball.speedX;
     ball.y += ball.speedY;
 
@@ -173,7 +173,7 @@ function updateBall() {
     }
 }
 
-function drawPointAnimation() {
+const drawPointAnimation = () => {
     if (player1PointAnimation.active) {
         const currentTime = Date.now();
         if (currentTime - player1PointAnimation.startTime < player1PointAnimation.duration) {
@@ -197,7 +197,7 @@ function drawPointAnimation() {
     }
 }
 
-function activatePointAnimation(player) {
+const activatePointAnimation = (player) => {
     if (player === 1) {
         player1PointAnimation.active = true;
         player1PointAnimation.startTime = Date.now();
@@ -207,20 +207,20 @@ function activatePointAnimation(player) {
     }
 }
 
-function resetBall() {
+const resetBall = () => {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
     ball.speedX = 5;
     ball.speedY = 5;
 }
 
-function drawScore() {
+const drawScore = () => {
     ctx.font = "30px Arial";
     ctx.fillText(scores.left, canvas.width / 4, 50);
     ctx.fillText(scores.right, (3 * canvas.width) / 4, 50);
 }
 
-function gameLoop() {
+const gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddles();
