@@ -46,12 +46,6 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
-function playSomExplosao() {
-    const somExplosao = document.getElementById("somExplosao")
-    somExplosao.currentTime = 0;
-    somExplosao.play();
-}
-
 function playSomRaquete() {
     const somRaquete = document.getElementById("somRaquete");
     somRaquete.currentTime = 0;
@@ -117,20 +111,52 @@ function updateBall() {
     }
 
     if (
-        ball.x + ball.radius > rightPaddle.x &&
-        ball.y > rightPaddle.y &&
-        ball.y < rightPaddle.y + rightPaddle.height
-    ) {
-        ball.speedX *= -1;
-        playSomRaquete();
-    }
-
-    if (
         ball.x - ball.radius < leftPaddle.x + leftPaddle.width &&
         ball.y > leftPaddle.y &&
         ball.y < leftPaddle.y + leftPaddle.height
     ) {
-        ball.speedX *= -1;
+        const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
+
+        if (relativePosition < 0.30 || relativePosition > 0.70) {
+            ball.speedX = 5;
+        }
+        else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
+            ball.speedX = 10;
+        } 
+        else if(relativePosition >= 0.45 && relativePosition <= 0.55) {
+            ball.speedX = 20;
+        }
+        else if(relativePosition >= 0.47 && relativePosition <= 0.53) {
+            ball.speedX = 40;
+        }
+        else {
+            ball.speedX *= -1;
+        }
+        playSomRaquete();
+    }
+
+    if (
+        ball.x + ball.radius > rightPaddle.x &&
+        ball.y > rightPaddle.y &&
+        ball.y < rightPaddle.y + rightPaddle.height
+    ) {
+        const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
+
+        if (relativePosition < 0.30 || relativePosition > 0.70) {
+            ball.speedX = -5;
+        }
+        else if(relativePosition >= 0.40 && relativePosition <= 0.60) {
+            ball.speedX = -10;
+        } 
+        else if(relativePosition >= 0.45 && relativePosition <= 0.55) {
+            ball.speedX = -15;
+        }
+        else if(relativePosition >= 0.47 && relativePosition <= 0.53) {
+            ball.speedX = -20;
+        }
+        else {
+            ball.speedX *= -1;
+        }
         playSomRaquete();
     }
 
@@ -138,14 +164,12 @@ function updateBall() {
         scores.left++;
         resetBall();
         activatePointAnimation(1);
-        playSomExplosao();
     }
 
     if (ball.x - ball.radius < 0) {
         scores.right++;
         resetBall();
         activatePointAnimation(2);
-        playSomExplosao();
     }
 }
 
