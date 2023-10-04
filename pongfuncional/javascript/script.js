@@ -92,7 +92,7 @@ const movePaddles = () => {
     if (keys.ArrowDown && rightPaddle.y + rightPaddle.height < canvas.height) {
         rightPaddle.y += rightPaddle.speed;
     }
-
+    
     if (keys.w && leftPaddle.y > 0) {
         leftPaddle.y -= leftPaddle.speed;
     }
@@ -170,7 +170,7 @@ const updateBall = () => {
         scores.right++;
         resetBall();
         activatePointAnimation(2);
-    }
+    }   
 }
 
 const drawPointAnimation = () => {
@@ -231,19 +231,20 @@ const gameLoop = () => {
     requestAnimationFrame(gameLoop);
 }
 
-const botaoJogar = document.getElementById('button1');
 const jogo = document.getElementById('jogo');
-    botaoJogar.addEventListener('click', () => {
-        document.getElementById('telainicial').style.display = 'none';
-        jogo.style.display = 'block';
-        setTimeout(() => {
-            jogo.classList.add('fade-in');
-        }, 10); 
-        gameLoop();
+const botaoJogar = document.getElementById('button1');
+botaoJogar.addEventListener('click', () => {
+    document.getElementById('telainicial').style.display = 'none';
+    jogo.style.display = 'block';
+    setTimeout(() => {
+        jogo.classList.add('fade-in');
+    }, 10); 
+    gameLoop();
 });
+
 const botaoTutorial = document.getElementById('button2');
-const tutorial = document.getElementById('tutorial');
-    botaoTutorial.addEventListener('click', () => {
-        document.getElementById('telainicial').style.display = 'none';
-        tutorial.style.display = 'block'; 
-});
+            const tutorial = document.getElementById('tutorial');
+            botaoTutorial.addEventListener('click', () => {
+                document.getElementById('telainicial').style.display = 'none';
+                tutorial.style.display = 'block'; 
+            });

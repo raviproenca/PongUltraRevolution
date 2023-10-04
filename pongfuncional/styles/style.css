@@ -5,6 +5,7 @@
     }
     
     body {
+    background-image: url(../assets/images/bodybackground.jpg);
     width: 100vw;
     height: 100vh;
     position: relative;
@@ -43,7 +44,7 @@
     #firebackground{
     position: absolute;
     width: 1130px;
-    height: 700px;
+    height: 660px;
     left: 0;  
     right: 0;
     top: 1;
@@ -68,6 +69,7 @@
         border: 10px outset orange;
     }
 
+    
     #button2{
     background-image: url(../assets/images/firebutton.jpg);
     border: 6px outset black;
@@ -107,3 +109,4 @@
             opacity: 1;
         }
     }
+   
