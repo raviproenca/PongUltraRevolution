@@ -243,8 +243,16 @@ botaoJogar.addEventListener('click', () => {
 });
 
 const botaoTutorial = document.getElementById('button2');
-            const tutorial = document.getElementById('tutorial');
+            const modal = document.getElementById('tutorial');
+            const closeModal = document.getElementById('close-tutorial');
             botaoTutorial.addEventListener('click', () => {
-                document.getElementById('telainicial').style.display = 'none';
-                tutorial.style.display = 'block'; 
+                modal.style.display = 'block';
+            });
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
             });
