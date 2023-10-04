@@ -7,7 +7,7 @@
     <title>Pong Ultra Revolution</title>
 </head>
 <body>
-     <div id="telainicial">
+    <div id="telainicial">
         <img src="./assets/images/title1.png" id="title1">
         <img src="./assets/images/title2.gif" id="title2">
         <img src="./assets/images/firevector.png" id="firebackground">
@@ -16,24 +16,12 @@
     </div>
     
     <div id="jogo" class="fade-in" style="display: none;">
-        <canvas id="pong" width="1200" height="650"></canvas>
-        <audio id="somExplosao" src="assets/sounds/somExplosao.mp3" preload="auto"></audio>
+        <canvas id="pong" width="1150" height="600"></canvas>
         <audio id="somRaquete" src="assets/sounds/som_raquete.mp3" preload="auto"></audio>
     </div>
     
-    <div id ="scripts">
-        <script>
-            const botaoJogar = document.getElementById('button1');
-            const jogo = document.getElementById('jogo');
-            botaoJogar.addEventListener('click', () => {
-                document.getElementById('telainicial').style.display = 'none';
-                jogo.style.display = 'block';
-                setTimeout(() => {
-            jogo.classList.add('fade-in');
-                }, 10); 
-            });
-        </script>
-        <script src="./javascript/script.js"></script>
-        </body>
+    <div id="tutorial" style="display: none;"></div>
 
+    <script src="./javascript/script.js"></script>
+</body>
 </html>

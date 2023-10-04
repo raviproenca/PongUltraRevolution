@@ -15,8 +15,8 @@
     
     #telainicial {
     position: relative;
-    width: 1200px;
-    height: 650px;
+    width: 1150px;
+    height: 600px;
     border: 10px groove orangered;
     background-image: url(../assets/images/backgroundred.jpg);
     margin-top: 40px;
@@ -42,7 +42,7 @@
     
     #firebackground{
     position: absolute;
-    width: 1180px;
+    width: 1130px;
     height: 700px;
     left: 0;  
     right: 0;
@@ -64,6 +64,10 @@
     margin: auto
     }
     
+    #button1:hover{
+        border: 10px outset orange;
+    }
+
     #button2{
     background-image: url(../assets/images/firebutton.jpg);
     border: 6px outset black;
@@ -75,6 +79,10 @@
     right: 0;
     top: 450px;
     margin: auto
+    }
+    
+    #button2:hover{
+        border: 10px outset orange;
     }
     
     canvas {
@@ -99,4 +107,3 @@
             opacity: 1;
         }
     }
-   
