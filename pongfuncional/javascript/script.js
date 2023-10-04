@@ -92,7 +92,7 @@ const movePaddles = () => {
     if (keys.ArrowDown && rightPaddle.y + rightPaddle.height < canvas.height) {
         rightPaddle.y += rightPaddle.speed;
     }
-
+    
     if (keys.w && leftPaddle.y > 0) {
         leftPaddle.y -= leftPaddle.speed;
     }
@@ -170,7 +170,7 @@ const updateBall = () => {
         scores.right++;
         resetBall();
         activatePointAnimation(2);
-    }
+    }   
 }
 
 const drawPointAnimation = () => {
