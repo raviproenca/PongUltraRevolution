@@ -1,4 +1,5 @@
 const canvas = document.getElementById("pong");
+
 const ctx = canvas.getContext("2d");
 
 const ball = {
@@ -45,6 +46,13 @@ const player2PointAnimation = {
     text: "PONTO PARA O JOGADOR 2",
     textColor: "red",
 };
+
+const exibirCaixaFimDeJogo = (mensagem) => {
+    const gameOverBox = document.getElementById('gameOverBox');
+    const gameOverMessage = document.getElementById('gameOverMessage');
+    gameOverMessage.textContent = mensagem;
+    gameOverBox.classList.remove('hidden');
+}
 
 const playSomRaquete = () => {
     const somRaquete = document.getElementById("somRaquete");
@@ -101,6 +109,46 @@ const movePaddles = () => {
     }
 };
 
+const restartGame = () => {
+    resetGame();
+    jogo.classList.remove('fade-in');
+    setTimeout(() => {
+        gameLoop();
+    }, 10);
+};
+
+const resetGame = () => {
+    scores.left = 0;
+    scores.right = 0;
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.speedX = 5;
+    ball.speedY = 5;
+    player1PointAnimation.active = false;
+    player2PointAnimation.active = false;
+
+    const gameOverBox = document.getElementById('gameOverBox');
+    gameOverBox.classList.add('hidden');
+}
+
+const limiteDePontos = 10
+
+const reiniciarJogoBtn = document.getElementById('reiniciarJogo');
+
+reiniciarJogoBtn.addEventListener('click', () => {
+    restartGame();
+});
+
+const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
+
+voltarTelaInicialBtn.addEventListener('click', () => {
+    document.getElementById('jogo').style.display = 'none';
+    document.getElementById('telainicial').style.display = 'block';
+    restartGame()
+    const gameOverBox = document.getElementById('gameOverBox');
+    gameOverBox.classList.add('hidden');
+});
+
 const updateBall = () => {
     ball.x += ball.speedX;
     ball.y += ball.speedY;
@@ -110,11 +158,7 @@ const updateBall = () => {
         playSomRaquete();
     }
 
-    if (
-        ball.x - ball.radius < leftPaddle.x + leftPaddle.width &&
-        ball.y > leftPaddle.y &&
-        ball.y < leftPaddle.y + leftPaddle.height
-    ) {
+    if (ball.x - ball.radius < leftPaddle.x + leftPaddle.width && ball.y > leftPaddle.y && ball.y < leftPaddle.y + leftPaddle.height) {
         const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
@@ -123,10 +167,10 @@ const updateBall = () => {
         else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
             ball.speedX = 10;
         } 
-        else if(relativePosition >= 0.45 && relativePosition <= 0.55) {
+        else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
             ball.speedX = 20;
         }
-        else if(relativePosition >= 0.47 && relativePosition <= 0.53) {
+        else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
             ball.speedX = 40;
         }
         else {
@@ -135,24 +179,20 @@ const updateBall = () => {
         playSomRaquete();
     }
 
-    if (
-        ball.x + ball.radius > rightPaddle.x &&
-        ball.y > rightPaddle.y &&
-        ball.y < rightPaddle.y + rightPaddle.height
-    ) {
+    if (ball.x + ball.radius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + rightPaddle.height) {
         const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
             ball.speedX = -5;
         }
-        else if(relativePosition >= 0.40 && relativePosition <= 0.60) {
+        else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
             ball.speedX = -10;
         } 
-        else if(relativePosition >= 0.45 && relativePosition <= 0.55) {
-            ball.speedX = -15;
-        }
-        else if(relativePosition >= 0.47 && relativePosition <= 0.53) {
+        else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
             ball.speedX = -20;
+        }
+        else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
+            ball.speedX = -40;
         }
         else {
             ball.speedX *= -1;
@@ -162,15 +202,27 @@ const updateBall = () => {
 
     if (ball.x + ball.radius > canvas.width) {
         scores.left++;
-        resetBall();
-        activatePointAnimation(1);
+        if (scores.left >= limiteDePontos) {
+            const vencedor = "Jogador 1";
+            const mensagem = `Parabéns, ${vencedor} venceu com ${scores.left} pontos!`;
+            exibirCaixaFimDeJogo(mensagem);
+        } else {
+            resetBall();
+            activatePointAnimation(1);
+        }
     }
 
     if (ball.x - ball.radius < 0) {
         scores.right++;
-        resetBall();
-        activatePointAnimation(2);
-    }   
+        if (scores.right >= limiteDePontos) {
+            const vencedor = "Jogador 2";
+            const mensagem = `Parabéns, ${vencedor} venceu com ${scores.right} pontos!`;
+            exibirCaixaFimDeJogo(mensagem);
+        } else {
+            resetBall();
+            activatePointAnimation(2);
+        }
+    }
 }
 
 const drawPointAnimation = () => {
@@ -221,6 +273,8 @@ const drawScore = () => {
 }
 
 const gameLoop = () => {
+    if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {return}
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddles();
@@ -255,4 +309,4 @@ const botaoTutorial = document.getElementById('button2');
                 if (event.target === modal) {
                     modal.style.display = 'none';
                 }
-            });
+});

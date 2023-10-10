@@ -7,23 +7,23 @@
     
     /* Aqui temos a definição de um estilo para o elemento <body> em HTML*/
     body {
-    background-image: url(../assets/images/bodybackground.jpg);/* Define uma imagem externa como fundo para o corpo */
-    width: 100vw; /* Define a largura como sendo 100% da largura da janela de visualização*/
-    height: 100vh; /* A altura sendo 100% da altura da janela de visualização */
-    position: relative; /* A posição é relativa ao seu posicionamento pai */
-    display: flex; /* Definimos o uso de um modelo de caixa flexível para seu conteúdo */
-    justify-content: center; /* ALinha o conteúdo dentro do corpo horizontalmente no centro*/
-    align-self: center; /* Centraliza verticalmente o conteúdo dentro do corpo */
+        background-image: url(../assets/images/bodybackground.jpg);/* Define uma imagem externa como fundo para o corpo */
+        width: 100vw; /* Define a largura como sendo 100% da largura da janela de visualização*/
+        height: 100vh; /* A altura sendo 100% da altura da janela de visualização */
+        position: relative; /* A posição é relativa ao seu posicionamento pai */
+        display: flex; /* Definimos o uso de um modelo de caixa flexível para seu conteúdo */
+        justify-content: center; /* ALinha o conteúdo dentro do corpo horizontalmente no centro*/
+        align-self: center; /* Centraliza verticalmente o conteúdo dentro do corpo */
     }
     
     /* Estilizando o elemento com o ID "telainicial" */
     #telainicial {
-    position: relative; /* Define a posição como relativa ao seu posicionamento pai */
-    width: 1150px; /* Largura de 1150 pixels */
-    height: 600px; /* Altura de 600 pixels */
-    border: 10px groove orangered; /* Define uma borda de 10 pixels na cor "orangered" */
-    background-image: url(../assets/images/backgroundred.jpg); 
-    margin-top: 40px; /* Define uma imagem externa como fundo */
+        position: relative; /* Define a posição como relativa ao seu posicionamento pai */
+        width: 1150px; /* Largura de 1150 pixels */
+        height: 600px; /* Altura de 600 pixels */
+        border: 10px groove orangered; /* Define uma borda de 10 pixels na cor "orangered" */
+        background-image: url(../assets/images/backgroundred.jpg); 
+        margin-top: 40px; /* Define uma imagem externa como fundo */
     }
     
     #title1{
@@ -45,14 +45,14 @@
     }
     
     #firebackground{
-    position: absolute;
-    width: 1130px;
-    height: 660px;
-    left: 0;  
-    right: 0;
-    top: 1;
-    bottom: 0;
-    margin: auto
+        position: absolute;
+        width: 1130px;
+        height: 660px;
+        left: 0;  
+        right: 0;
+        top: 1;
+        bottom: 0;
+        margin: auto
     }
 
     #button1{
@@ -141,3 +141,21 @@
         font-weight: bold;
         cursor: pointer;
     }
+    #gameOverBox {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        background-color: #fff;
+        border: 2px solid #000;
+        text-align: center;
+        padding: 20px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1; /* Certifique-se de que está na frente do jogo */
+    }
+    
+    .hidden {
+        display: none; /* Oculta o elemento com a classe "hidden" */
+    }
+    
