@@ -1,29 +1,26 @@
-*   /* Essa parte do código define um estilo de entrada para os elementos HTML */
-    {
-        margin: 0; /* A margem sendo zero */
-        padding: 0; /* O preenchimento sendo zero */
-        box-sizing: border-box;  /* Utilizamos box-sizing para alteração da propriedade padrão da box model e definimos como border-box */
+*   {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
     
-    /* Aqui temos a definição de um estilo para o elemento <body> em HTML*/
     body {
-        background-image: url(../assets/images/bodybackground.jpg);/* Define uma imagem externa como fundo para o corpo */
-        width: 100vw; /* Define a largura como sendo 100% da largura da janela de visualização*/
-        height: 100vh; /* A altura sendo 100% da altura da janela de visualização */
-        position: relative; /* A posição é relativa ao seu posicionamento pai */
-        display: flex; /* Definimos o uso de um modelo de caixa flexível para seu conteúdo */
-        justify-content: center; /* ALinha o conteúdo dentro do corpo horizontalmente no centro*/
-        align-self: center; /* Centraliza verticalmente o conteúdo dentro do corpo */
+        background-image: url(../assets/images/bodybackground.jpg);
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-self: center; 
     }
     
-    /* Estilizando o elemento com o ID "telainicial" */
     #telainicial {
-        position: relative; /* Define a posição como relativa ao seu posicionamento pai */
-        width: 1150px; /* Largura de 1150 pixels */
-        height: 600px; /* Altura de 600 pixels */
-        border: 10px groove orangered; /* Define uma borda de 10 pixels na cor "orangered" */
+        position: relative;
+        width: 1150px;
+        height: 600px; 
+        border: 10px groove orangered;
         background-image: url(../assets/images/backgroundred.jpg); 
-        margin-top: 40px; /* Define uma imagem externa como fundo */
+        margin-top: 40px;
     }
     
     #title1{
@@ -152,10 +149,10 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 1; /* Certifique-se de que está na frente do jogo */
+        z-index: 1; 
     }
     
     .hidden {
-        display: none; /* Oculta o elemento com a classe "hidden" */
+        display: none;
     }
     
