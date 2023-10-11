@@ -6,8 +6,8 @@ const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     radius: 10,
-    speedX: 5,
-    speedY: 5,
+    speedX: 10,
+    speedY: 10,
 };
 
 const leftPaddle = {
@@ -15,7 +15,7 @@ const leftPaddle = {
     y: canvas.height / 2 - 50,
     width: 10,
     height: 100,
-    speed: 5,
+    speed: 10,
 };
 
 const rightPaddle = {
@@ -23,7 +23,7 @@ const rightPaddle = {
     y: canvas.height / 2 - 50,
     width: 10,
     height: 100,
-    speed: 5,
+    speed: 10,
 };
 
 const scores = {
@@ -52,6 +52,12 @@ const exibirCaixaFimDeJogo = (mensagem) => {
     const gameOverMessage = document.getElementById('gameOverMessage');
     gameOverMessage.textContent = mensagem;
     gameOverBox.classList.remove('hidden');
+}
+
+const playSomClique = () => {
+    const somClique = document.getElementById("somClique");
+    somClique.currentTime = 0;
+    somClique.play();
 }
 
 const playSomRaquete = () => {
@@ -122,8 +128,8 @@ const resetGame = () => {
     scores.right = 0;
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedX = 5;
-    ball.speedY = 5;
+    ball.speedX = 10;
+    ball.speedY = 10;
     player1PointAnimation.active = false;
     player2PointAnimation.active = false;
 
@@ -131,12 +137,13 @@ const resetGame = () => {
     gameOverBox.classList.add('hidden');
 }
 
-const limiteDePontos = 11
+const limiteDePontos = 10
 
 const reiniciarJogoBtn = document.getElementById('reiniciarJogo');
 
 reiniciarJogoBtn.addEventListener('click', () => {
     restartGame();
+    playSomClique();
 });
 
 const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
@@ -144,7 +151,8 @@ const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
 voltarTelaInicialBtn.addEventListener('click', () => {
     document.getElementById('jogo').style.display = 'none';
     document.getElementById('telainicial').style.display = 'block';
-    restartGame()
+    resetGame();
+    playSomClique();
     const gameOverBox = document.getElementById('gameOverBox');
     gameOverBox.classList.add('hidden');
 });
@@ -162,13 +170,13 @@ const updateBall = () => {
         const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = 5;
+            ball.speedX = 10;
         }
         else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
-            ball.speedX = 10;
+            ball.speedX = 15;
         } 
         else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
-            ball.speedX = 20;
+            ball.speedX = 25;
         }
         else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
             ball.speedX = 40;
@@ -183,13 +191,13 @@ const updateBall = () => {
         const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = -5;
+            ball.speedX = -10;
         }
         else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
-            ball.speedX = -10;
+            ball.speedX = -15;
         } 
         else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
-            ball.speedX = -20;
+            ball.speedX = -25;
         }
         else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
             ball.speedX = -40;
@@ -262,8 +270,13 @@ const activatePointAnimation = (player) => {
 const resetBall = () => {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedX = 5;
-    ball.speedY = 5;
+    ball.speedY = 10;
+
+    if (scores.left > scores.right) {
+        ball.speedX = -10;
+    } else {
+        ball.speedX = 10;
+    }
 }
 
 const drawScore = () => {
@@ -290,6 +303,7 @@ const botaoJogar = document.getElementById('button1');
 botaoJogar.addEventListener('click', () => {
     document.getElementById('telainicial').style.display = 'none';
     jogo.style.display = 'block';
+    playSomClique()
     setTimeout(() => {
         jogo.classList.add('fade-in');
     }, 10); 
@@ -301,6 +315,7 @@ const modal = document.getElementById('tutorial');
 const closeModal = document.getElementById('close-tutorial');
     botaoTutorial.addEventListener('click', () => {
         modal.style.display = 'block';
+        playSomClique()
 });
     closeModal.addEventListener('click', () => {
          modal.style.display = 'none';
