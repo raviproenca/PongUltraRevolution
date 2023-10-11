@@ -325,3 +325,4 @@ const closeModal = document.getElementById('close-tutorial');
             modal.style.display = 'none';
     }
 });
+
