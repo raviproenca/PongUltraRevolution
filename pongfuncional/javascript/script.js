@@ -131,7 +131,7 @@ const resetGame = () => {
     gameOverBox.classList.add('hidden');
 }
 
-const limiteDePontos = 10
+const limiteDePontos = 11
 
 const reiniciarJogoBtn = document.getElementById('reiniciarJogo');
 
@@ -297,16 +297,16 @@ botaoJogar.addEventListener('click', () => {
 });
 
 const botaoTutorial = document.getElementById('button2');
-            const modal = document.getElementById('tutorial');
-            const closeModal = document.getElementById('close-tutorial');
-            botaoTutorial.addEventListener('click', () => {
-                modal.style.display = 'block';
-            });
-            closeModal.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
+const modal = document.getElementById('tutorial');
+const closeModal = document.getElementById('close-tutorial');
+    botaoTutorial.addEventListener('click', () => {
+        modal.style.display = 'block';
+});
+    closeModal.addEventListener('click', () => {
+         modal.style.display = 'none';
+});
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+    }
 });
