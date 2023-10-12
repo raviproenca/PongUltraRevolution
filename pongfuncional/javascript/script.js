@@ -6,8 +6,9 @@ const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
     radius: 10,
-    speedX: 10,
-    speedY: 10,
+    speedX: 5,
+    speedY: 5,
+    color: "white"
 };
 
 const leftPaddle = {
@@ -15,7 +16,8 @@ const leftPaddle = {
     y: canvas.height / 2 - 50,
     width: 10,
     height: 100,
-    speed: 10,
+    speed: 5,
+    color: "white"
 };
 
 const rightPaddle = {
@@ -23,7 +25,8 @@ const rightPaddle = {
     y: canvas.height / 2 - 50,
     width: 10,
     height: 100,
-    speed: 10,
+    speed: 5,
+    color: "white"
 };
 
 const scores = {
@@ -65,18 +68,103 @@ const playSomRaquete = () => {
     somRaquete.currentTime = 0;
     somRaquete.play();
 }
+const gameData = {
+    isRedPaddle: false,
+};
+const gameDatadireita = {
+    isRedPaddledireito: false,
+};
+const gamedatapad = {
+    touchedredpad: false,
+};
+
+const progressbardireita = document.querySelector('.progress-bardireita');
+const handleKeyPressdireita = (event) => {
+    const progressValue = parseInt(progressbardireita.getAttribute('data-progress'))
+    if (event.key === 'o' && progressValue === 100) {
+        progressbardireita.setAttribute('data-progress', '0'); 
+        progressbardireita.style.width = '0%'; 
+        progressbardireita.style.backgroundColor = '#4418e4'; 
+        rightPaddle.color = 'red'
+        gameDatadireita.isRedPaddledireito = true;
+        scores.color = "red"
+    }
+};
+
+const progressbar = document.querySelector('.progress-baresquerda');
+
+const handleKeyPress = (event) => {
+    const progressValue = parseInt(progressbar.getAttribute('data-progress'))
+    if (event.key === 'x' && progressValue === 100) {
+        progressbar.setAttribute('data-progress', '0'); 
+        progressbar.style.width = '0%'; 
+        progressbar.style.backgroundColor = '#4418e4'; 
+        leftPaddle.color = 'red'
+        gameData.isRedPaddle = true;
+        scores.color = "red"
+    }
+};
+
+document.addEventListener('keydown', handleKeyPress);
+document.addEventListener('keydown', handleKeyPressdireita);
+
+const uploadesquerda = () => {
+    const progressValue = parseInt(progressbar.getAttribute('data-progress')) || 0; 
+    const newProgressValue = progressValue + 20; 
+    if (newProgressValue <= 100) {
+        progressbar.style.width = `${newProgressValue}%`;
+        progressbar.setAttribute('data-progress', newProgressValue.toString());
+    } 
+};
+const uploaddireita = () => {
+    const progressValue = parseInt(progressbardireita.getAttribute('data-progress')) || 0; 
+    const newProgressValue = progressValue + 20; 
+    if (newProgressValue <= 100) {
+        progressbardireita.style.width = `${newProgressValue}%`;
+        progressbardireita.setAttribute('data-progress', newProgressValue.toString());
+    } 
+};
+const trailLength = 5;
+const trail = [];
 
 const drawBall = () => {
+  trail.push({ x: ball.x, y: ball.y });
+
+  if (trail.length > trailLength) {
+    trail.shift();
+  }
+
+  // Limpe o canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const drawTrail = (point, index) => {
+    const alpha = 1 - (index / trail.length);
+    
     ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fillStyle = "white";
+    ctx.arc(point.x, point.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "red";
     ctx.fill();
     ctx.closePath();
-}
+  };
+
+  if (gamedatapad.touchedredpad) {
+    trail.forEach(drawTrail);
+    ctx.globalAlpha = 1;
+  }
+
+  // Desenhe a bola
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = ball.color;
+  ctx.fill();
+  ctx.closePath();
+};
 
 const drawPaddles = () => {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = leftPaddle.color;
     ctx.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
+    
+    ctx.fillStyle = rightPaddle.color;
     ctx.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
 }
 
@@ -128,8 +216,8 @@ const resetGame = () => {
     scores.right = 0;
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedX = 10;
-    ball.speedY = 10;
+    ball.speedX = 5;
+    ball.speedY = 5;
     player1PointAnimation.active = false;
     player2PointAnimation.active = false;
 
@@ -166,45 +254,48 @@ const updateBall = () => {
         playSomRaquete();
     }
 
-    if (ball.x - ball.radius < leftPaddle.x + leftPaddle.width && ball.y > leftPaddle.y && ball.y < leftPaddle.y + leftPaddle.height) {
+    if (
+        ball.x - ball.radius < leftPaddle.x + leftPaddle.width &&
+        ball.x + ball.radius > leftPaddle.x &&
+        ball.y > leftPaddle.y &&
+        ball.y < leftPaddle.y + leftPaddle.height
+    ) {
         const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
-
+       
         if (relativePosition < 0.30 || relativePosition > 0.70) {
+            ball.speedX = 5; // Velocidade normal no canto superior e inferior
+        } else if (gameData.isRedPaddle) {
+            ball.speedX = 30; // Velocidade aumentada quando a raquete é vermelha
+            ball.color = "red"
+            gamedatapad.touchedredpad = true;
+        } else {
             ball.speedX = 10;
+            uploadesquerda();
         }
-        else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
-            ball.speedX = 15;
-        } 
-        else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
-            ball.speedX = 25;
-        }
-        else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
-            ball.speedX = 40;
-        }
-        else {
-            ball.speedX *= -1;
-        }
+        
         playSomRaquete();
     }
+        
 
-    if (ball.x + ball.radius > rightPaddle.x && ball.y > rightPaddle.y && ball.y < rightPaddle.y + rightPaddle.height) {
+    if (
+        ball.x + ball.radius > rightPaddle.x &&
+        ball.x - ball.radius < rightPaddle.x + rightPaddle.width &&
+        ball.y > rightPaddle.y &&
+        ball.y < rightPaddle.y + rightPaddle.height
+    ) {
         const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
+            ball.speedX = -5; // Velocidade normal no canto superior e inferior
+        } else if (gameDatadireita.isRedPaddledireito) {
+            ball.speedX = -30; // Velocidade aumentada quando a raquete é vermelha
+            ball.color = "red"
+            gamedatapad.touchedredpad = true;
+        } else {
             ball.speedX = -10;
+            uploaddireita();
         }
-        else if (relativePosition >= 0.40 && relativePosition <= 0.60) {
-            ball.speedX = -15;
-        } 
-        else if (relativePosition >= 0.45 && relativePosition <= 0.55) {
-            ball.speedX = -25;
-        }
-        else if (relativePosition >= 0.47 && relativePosition <= 0.53) {
-            ball.speedX = -40;
-        }
-        else {
-            ball.speedX *= -1;
-        }
+        
         playSomRaquete();
     }
 
@@ -266,16 +357,43 @@ const activatePointAnimation = (player) => {
         player2PointAnimation.startTime = Date.now();
     }
 }
+const resetRedPaddle = () => {
+    leftPaddle.color = "white";
+    gameData.isRedPaddle = false;
+    gamedatapad.touchedredpad = false;
+    scores.color = "white"
+    ball.color = "white"
+};
+const resetRedPaddledireito = () => {
+    rightPaddle.color = "white";
+    gameDatadireita.isRedPaddledireito = false;
+    gamedatapad.touchedredpad = false;
+    scores.color = "white"
+    ball.color = "white"
+};
+
 
 const resetBall = () => {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedY = 10;
+    ball.speedY = 5;
 
     if (scores.left > scores.right) {
-        ball.speedX = -10;
+        ball.speedX = -5;
+        if (gameData.isRedPaddle) {
+            resetRedPaddle();
+        } else {
+            resetRedPaddledireito();
+        }
+    } else if (scores.left < scores.right) {
+        ball.speedX = 5;
+        if (gameData.isRedPaddle) {
+            resetRedPaddle();
+        } else {
+            resetRedPaddledireito();
+        }
     } else {
-        ball.speedX = 10;
+    
     }
 }
 
@@ -325,4 +443,3 @@ const closeModal = document.getElementById('close-tutorial');
             modal.style.display = 'none';
     }
 });
-
