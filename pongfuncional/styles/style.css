@@ -138,6 +138,92 @@
         font-weight: bold;
         cursor: pointer;
     }
+
+    #button3 {
+        background-image: url(../assets/images/firebutton.jpg);
+        border: 3px outset black;
+        cursor: pointer;
+        position: absolute;
+        right: 648px;
+        width: 100px;
+        height: 40px;
+    }
+
+    #button3:hover {
+            border: 3px outset orange;
+    }
+
+    .modal2 {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content2 {
+        position: absolute;
+        width: 300px;
+        height: 250px;
+        background-color: #b60b0bc4;
+        border: 5px outset rgb(236, 108, 3);
+        border-radius: 15px;
+        text-align: center;
+        padding: 20px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1; 
+    }
+
+    .close2 {
+        color: yellow;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #reiniciarJogo2 {
+        background-image: url(../assets/images/firebutton.jpg);
+        border: 3px outset black;
+        cursor: pointer;
+        position: absolute;
+        text-align: center;
+        width: 100px;
+        height: 60px;
+        cursor: pointer;
+        left: 95px;
+        right: 0;
+        top: 80px;
+    }
+
+    #reiniciarJogo2:hover{
+        border: 3px outset orange;
+    }
+
+    #voltarTelaInicial2 {
+        background-image: url(../assets/images/firebutton.jpg);
+        border: 3px outset black;
+        cursor: pointer;
+        position: absolute;
+        text-align: center;
+        width: 100px;
+        height: 60px;
+        cursor: pointer;
+        left: 95px;
+        right: 0;
+        top: 165px;
+    }
+ 
+    #voltarTelaInicial2:hover{
+        border: 3px outset orange;
+    }
+
     #gameOverBox {
         position: absolute;
         width: 300px;
@@ -159,9 +245,8 @@
     }
     
     #reiniciarJogo {
-        background-color: white;
+        background-image: url(../assets/images/firebutton.jpg);
         border: 3px outset black;
-        border-radius: 5px;
         cursor: pointer;
         position: absolute;
         text-align: center;
@@ -178,9 +263,8 @@
     }
 
     #voltarTelaInicial {
-        background-color: white;
+        background-image: url(../assets/images/firebutton.jpg);
         border: 3px outset black;
-        border-radius: 5px;
         cursor: pointer;
         position: absolute;
         text-align: center;
@@ -196,7 +280,7 @@
         border: 3px outset orange;
     }
     
-    .baresquerda {
+    .baresquerda  {
         height: 20px;
         width: 300px;
         background-color: #ccc;

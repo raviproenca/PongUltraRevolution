@@ -20,7 +20,7 @@
     <div id="jogo" class="fade-in" style="display: none;">
         <canvas id="pong" width="1150" height="600"></canvas>
         <audio id="somRaquete" src="assets/sounds/somRaquete.mp3" preload="auto"></audio>
-        <button id="button3"><img src="./assets/images/pause.png" width="100px"></button>
+        <button id="button3"><img src="./assets/images/botaopause.png" width="80px"></button>
         <div class="bardireita">
             <div class="progress-bardireita" data-progress="0"></div>
         </div>
@@ -28,26 +28,30 @@
             <div class="progress-baresquerda" data-progress="0"></div>
         </div>
     </div>
-        
+    
     <div id="tutorial" class="modal">
         <div class="modal-content">
             <span class="close" id="close-tutorial">&times;</span>
-            <h1>TUTORIAL</h1>
-            <h2>Clique nos botões "W e S" para mover a raquete da esquerda, assim como "seta para cima" e "seta para baixo" para mover a raquete da direita. <br> <br>
-            Acertos no centro da raquete dão mais velocidade para a bola.</h2>
+            <h1><img src="./assets/images/TutorialTitle.png"></h1>
+            <h2>* Clique nos botões "W e S" para mover a raquete da esquerda, assim como "seta para cima" e "seta para baixo" para mover a raquete da direita. <br> <br>
+                * Acertos no centro da raquete dão mais velocidade para a bola. <br> <br>
+                * Ao carregar a barra de habilidade, clique "X" para usá-la na raquete esquerda e "O" para a raquete direita.
+            </h2>
         </div>
     </div>
 
     <div id="gameOverBox" class="hidden">
         <div id="gameOverMessage">Mensagem de Fim de Jogo</div>
-        <button id="reiniciarJogo"><img src="" width="85%"></button>
-        <button id="voltarTelaInicial"><img src="" width="97%"></button>
+        <button id="reiniciarJogo"><img src="./assets/images/restartButton.png" width="85%"></button>
+        <button id="voltarTelaInicial"><img src="./assets/images/backButton.png" width="97%"></button>
     </div>
 
-<div id="pausegame" class="modal">
-    <div class="modal-content">
-    <div id="pausemessage"> jogo pausado</div>
-     <button id="pause"><img src="" width="90%"></button>
+    <div id="pausegame" class="modal2">
+        <div class="modal-content2">
+        <div id="pausemessage"><img src="./assets/images/PauseTitle.png"></div>
+        <button id="reiniciarJogo2"><img src="./assets/images/restartButton.png" width="85%"></button>
+        <button id="voltarTelaInicial2"><img src="./assets/images/backButton.png" width="97%"></button>
+        <span class="close2" id="close-pause">&times;</span>
       </div>
     </div>
 

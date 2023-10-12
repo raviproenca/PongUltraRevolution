@@ -443,3 +443,57 @@ const closeModal = document.getElementById('close-tutorial');
             modal.style.display = 'none';
     }
 });
+
+const botaoPause = document.getElementById('button3');
+const modal2 = document.getElementById('pausegame');
+const closeModal2 = document.getElementById('close-pause');
+    botaoPause.addEventListener('click', () => {
+        modal2.style.display = 'block';
+        playSomClique()
+});
+    reiniciarJogoBtn.addEventListener('click', () => {
+        restartGame();
+        playSomClique();
+});
+    closeModal2.addEventListener('click', () => {
+        modal2.style.display = 'none';
+});
+    window.addEventListener('click', (event) => {
+        if (event.target === modal2) {
+        modal2.style.display = 'none';
+    }
+
+});
+
+const restartGame2 = () => {
+    resetGame();
+    jogo.classList.remove('fade-in');
+    setTimeout(() => {
+        gameLoop();
+    }, 10);
+};
+
+const pauseGameBox = () => {
+    document.getElementById('pausegame');
+    pauseGameBox.classList.add('modal2');
+}
+
+const reiniciarJogoBtn2 = document.getElementById('reiniciarJogo2');
+reiniciarJogoBtn2.addEventListener('click', () => {
+    restartGame();
+    playSomClique();
+});
+
+const voltarTelaInicialBtn2 = document.getElementById('voltarTelaInicial2');
+voltarTelaInicialBtn.addEventListener('click', () => {
+    document.getElementById('jogo').style.display = 'none';
+    document.getElementById('telainicial').style.display = 'block';
+    resetGame();
+    playSomClique();
+    const pauseGameBox = document.getElementById('pausegame');
+    pauseGameBox.classList.add('modal2');
+});
+
+
+
+
