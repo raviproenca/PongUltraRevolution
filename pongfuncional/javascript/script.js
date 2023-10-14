@@ -1,39 +1,3 @@
-const canvas = document.getElementById("pong");
-
-const ctx = canvas.getContext("2d");
-
-const ball = {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-    radius: 10,
-    speedX: 5,
-    speedY: 5,
-    color: "white"
-};
-
-const leftPaddle = {
-    x: 0,
-    y: canvas.height / 2 - 50,
-    width: 10,
-    height: 100,
-    speed: 5,
-    color: "white"
-};
-
-const rightPaddle = {
-    x: canvas.width - 10,
-    y: canvas.height / 2 - 50,
-    width: 10,
-    height: 100,
-    speed: 5,
-    color: "white"
-};
-
-const scores = {
-    left: 0,
-    right: 0,
-};
-
 const player1PointAnimation = {
     active: false,
     duration: 1000,
@@ -493,7 +457,3 @@ voltarTelaInicialBtn.addEventListener('click', () => {
     const pauseGameBox = document.getElementById('pausegame');
     pauseGameBox.classList.add('modal2');
 });
-
-
-
-
