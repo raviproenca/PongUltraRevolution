@@ -50,6 +50,11 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
+const isGamePausedState = false;
+const gameState = {
+    isGamePaused: false,
+};
+
 const exibirCaixaFimDeJogo = (mensagem) => {
     const gameOverBox = document.getElementById('gameOverBox');
     const gameOverMessage = document.getElementById('gameOverMessage');
@@ -187,6 +192,9 @@ document.addEventListener("keyup", function (e) {
 });
 
 const movePaddles = () => {
+    if (gameState.isGamePaused) {
+        return;
+    }
     if (keys.ArrowUp && rightPaddle.y > 0) {
         rightPaddle.y -= rightPaddle.speed;
     }
@@ -204,6 +212,7 @@ const movePaddles = () => {
 
 const restartGame = () => {
     resetGame();
+    gameState.isGamePaused = false;
     jogo.classList.remove('fade-in');
     setTimeout(() => {
         gameLoop();
@@ -229,8 +238,11 @@ const limiteDePontos = 10
 const reiniciarJogoBtn = document.getElementById('reiniciarJogo');
 
 reiniciarJogoBtn.addEventListener('click', () => {
-    restartGame();
-    playSomClique();
+    if (!gameState.isGamePaused) {
+        restartGame();
+        playSomClique();
+        updateGame();
+    }
 });
 
 const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
@@ -238,7 +250,7 @@ const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
 voltarTelaInicialBtn.addEventListener('click', () => {
     document.getElementById('jogo').style.display = 'none';
     document.getElementById('telainicial').style.display = 'block';
-    resetGame();
+    restartGame();
     playSomClique();
     const gameOverBox = document.getElementById('gameOverBox');
     gameOverBox.classList.add('hidden');
@@ -402,18 +414,82 @@ const drawScore = () => {
     ctx.fillText(scores.right, (3 * canvas.width) / 4, 50);
 }
 
-const gameLoop = () => {
-    if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {return}
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    drawPaddles();
-    movePaddles();
-    updateBall();
-    drawScore();
-    drawPointAnimation();
-    requestAnimationFrame(gameLoop);
-}
+const frameDuration = 16;
+
+const gameLoop = (timestamp) => {
+    if (!gameState.isGamePaused) {
+        const deltaTime = timestamp - (gameLoop.lastTimestamp || timestamp);
+        gameLoop.lastTimestamp = timestamp;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        updateBall();
+        movePaddles();
+        drawBall();
+        drawPaddles();
+        drawScore();
+        drawPointAnimation();
+        if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {
+        } else {
+            requestAnimationFrame(gameLoop);
+        }
+    }
+};
+
+const pauseButton = document.getElementById('button3');
+const pauseDialog = document.getElementById('pauseDialog');
+const resumeButton = document.getElementById('resumeButton');
+const goToMainMenuButton = document.getElementById('goToMainMenuButton');
+
+const isGamePaused = () => {
+    return isGamePausedState;
+};
+
+const toggleGamePause = () => {
+    gameState.isGamePaused = !gameState.isGamePaused;
+    if (!gameState.isGamePaused) {
+        updateGame();
+    }
+};
+
+pauseButton.addEventListener('click', () => {
+    pauseButtonHandler();
+});
+
+resumeButton.addEventListener('click', () => {
+    if (gameState.isGamePaused) {
+        pauseDialog.style.display = 'none';
+        gameState.isGamePaused = false;
+        requestAnimationFrame(gameLoop);
+    }
+});;
+
+goToMainMenuButton.addEventListener('click', () => {
+    pauseDialog.style.display = 'none';
+    document.getElementById('jogo').style.display = 'none';
+    document.getElementById('telainicial').style.display = 'block';
+    toggleGamePause();
+});
+
+const pauseButtonHandler = () => {
+    gameState.isGamePaused = !gameState.isGamePaused;
+    if (!gameState.isGamePaused) {
+        pauseDialog.style.display = 'none';
+        requestAnimationFrame(gameLoop);
+    } else {
+        pauseDialog.style.display = 'block';
+    }
+};
+
+const startGame = () => {
+    gameState.isGamePaused = false;
+    restartGame();
+    playSomClique();
+    document.getElementById('telainicial').style.display = 'none';
+    jogo.style.display = 'block';
+    setTimeout(() => {
+        jogo.classList.add('fade-in');
+    }, 10);
+    updateGame();
+};
 
 const jogo = document.getElementById('jogo');
 const botaoJogar = document.getElementById('button1');
@@ -424,7 +500,7 @@ botaoJogar.addEventListener('click', () => {
     setTimeout(() => {
         jogo.classList.add('fade-in');
     }, 10); 
-    gameLoop();
+    startGame();
 });
 
 const botaoTutorial = document.getElementById('button2');
