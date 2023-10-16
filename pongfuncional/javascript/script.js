@@ -1,3 +1,39 @@
+const canvas = document.getElementById("pong");
+
+const ctx = canvas.getContext("2d");
+
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 10,
+    speedX: 5,
+    speedY: 5,
+    color: "white"
+};
+
+const leftPaddle = {
+    x: 0,
+    y: canvas.height / 2 - 50,
+    width: 10,
+    height: 100,
+    speed: 5,
+    color: "white"
+};
+
+const rightPaddle = {
+    x: canvas.width - 10,
+    y: canvas.height / 2 - 50,
+    width: 10,
+    height: 100,
+    speed: 5,
+    color: "white"
+};
+
+const scores = {
+    left: 0,
+    right: 0,
+};
+
 const player1PointAnimation = {
     active: false,
     duration: 1000,
@@ -98,7 +134,6 @@ const drawBall = () => {
     trail.shift();
   }
 
-  // Limpe o canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   const drawTrail = (point, index) => {
@@ -116,7 +151,7 @@ const drawBall = () => {
     ctx.globalAlpha = 1;
   }
 
-  // Desenhe a bola
+
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
   ctx.fillStyle = ball.color;
@@ -227,9 +262,9 @@ const updateBall = () => {
         const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
        
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = 5; // Velocidade normal no canto superior e inferior
+            ball.speedX = 5; 
         } else if (gameData.isRedPaddle) {
-            ball.speedX = 30; // Velocidade aumentada quando a raquete é vermelha
+            ball.speedX = 30; 
             ball.color = "red"
             gamedatapad.touchedredpad = true;
         } else {
@@ -250,9 +285,9 @@ const updateBall = () => {
         const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = -5; // Velocidade normal no canto superior e inferior
+            ball.speedX = -5; 
         } else if (gameDatadireita.isRedPaddledireito) {
-            ball.speedX = -30; // Velocidade aumentada quando a raquete é vermelha
+            ball.speedX = -30; 
             ball.color = "red"
             gamedatapad.touchedredpad = true;
         } else {
@@ -406,54 +441,4 @@ const closeModal = document.getElementById('close-tutorial');
         if (event.target === modal) {
             modal.style.display = 'none';
     }
-});
-
-const botaoPause = document.getElementById('button3');
-const modal2 = document.getElementById('pausegame');
-const closeModal2 = document.getElementById('close-pause');
-    botaoPause.addEventListener('click', () => {
-        modal2.style.display = 'block';
-        playSomClique()
-});
-    reiniciarJogoBtn.addEventListener('click', () => {
-        restartGame();
-        playSomClique();
-});
-    closeModal2.addEventListener('click', () => {
-        modal2.style.display = 'none';
-});
-    window.addEventListener('click', (event) => {
-        if (event.target === modal2) {
-        modal2.style.display = 'none';
-    }
-
-});
-
-const restartGame2 = () => {
-    resetGame();
-    jogo.classList.remove('fade-in');
-    setTimeout(() => {
-        gameLoop();
-    }, 10);
-};
-
-const pauseGameBox = () => {
-    document.getElementById('pausegame');
-    pauseGameBox.classList.add('modal2');
-}
-
-const reiniciarJogoBtn2 = document.getElementById('reiniciarJogo2');
-reiniciarJogoBtn2.addEventListener('click', () => {
-    restartGame();
-    playSomClique();
-});
-
-const voltarTelaInicialBtn2 = document.getElementById('voltarTelaInicial2');
-voltarTelaInicialBtn.addEventListener('click', () => {
-    document.getElementById('jogo').style.display = 'none';
-    document.getElementById('telainicial').style.display = 'block';
-    resetGame();
-    playSomClique();
-    const pauseGameBox = document.getElementById('pausegame');
-    pauseGameBox.classList.add('modal2');
 });
