@@ -56,19 +56,12 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3b47c3177e23bb5bee2f2a511278a564badd382d
 const isGamePausedState = false;
 const gameState = {
     isGamePaused: false,
 };
 
-<<<<<<< HEAD
 //Caixa de end game com mensagem personalizada
-=======
->>>>>>> 3b47c3177e23bb5bee2f2a511278a564badd382d
 const exibirCaixaFimDeJogo = (mensagem) => {
     const gameOverBox = document.getElementById('gameOverBox');
     const gameOverMessage = document.getElementById('gameOverMessage');
@@ -476,84 +469,6 @@ const drawScore = () => {
 }
 
 const frameDuration = 16;
-<<<<<<< HEAD
-=======
-
-const gameLoop = (timestamp) => {
-    if (!gameState.isGamePaused) {
-        const deltaTime = timestamp - (gameLoop.lastTimestamp || timestamp);
-        gameLoop.lastTimestamp = timestamp;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        updateBall();
-        movePaddles();
-        drawBall();
-        drawPaddles();
-        drawScore();
-        drawPointAnimation();
-        if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {
-        } else {
-            requestAnimationFrame(gameLoop);
-        }
-    }
-};
-
-const pauseButton = document.getElementById('button3');
-const pauseDialog = document.getElementById('pauseDialog');
-const resumeButton = document.getElementById('resumeButton');
-const goToMainMenuButton = document.getElementById('goToMainMenuButton');
-
-const isGamePaused = () => {
-    return isGamePausedState;
-};
-
-const toggleGamePause = () => {
-    gameState.isGamePaused = !gameState.isGamePaused;
-    if (!gameState.isGamePaused) {
-        updateGame();
-    }
-};
-
-pauseButton.addEventListener('click', () => {
-    pauseButtonHandler();
-});
-
-resumeButton.addEventListener('click', () => {
-    if (gameState.isGamePaused) {
-        pauseDialog.style.display = 'none';
-        gameState.isGamePaused = false;
-        requestAnimationFrame(gameLoop);
-    }
-});;
-
-goToMainMenuButton.addEventListener('click', () => {
-    pauseDialog.style.display = 'none';
-    document.getElementById('jogo').style.display = 'none';
-    document.getElementById('telainicial').style.display = 'block';
-    toggleGamePause();
-});
-
-const pauseButtonHandler = () => {
-    gameState.isGamePaused = !gameState.isGamePaused;
-    if (!gameState.isGamePaused) {
-        pauseDialog.style.display = 'none';
-        requestAnimationFrame(gameLoop);
-    } else {
-        pauseDialog.style.display = 'block';
-    }
-};
-
-const startGame = () => {
-    gameState.isGamePaused = false;
-    restartGame();
-    playSomClique();
-    document.getElementById('telainicial').style.display = 'none';
-    jogo.style.display = 'block';
-    setTimeout(() => {
-        jogo.classList.add('fade-in');
-    }, 10);
-    updateGame();
-};
->>>>>>> 3b47c3177e23bb5bee2f2a511278a564badd382d
 
 // Controla o ciclo de atualização e renderização do jogo
 const gameLoop = (timestamp) => {
