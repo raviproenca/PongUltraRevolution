@@ -1,7 +1,10 @@
+//Referência do elemento HTML com o ID "pong"
 const canvas = document.getElementById("pong");
 
+// Pega o contexto 2D do elemento 'canvas' para criar formas
 const ctx = canvas.getContext("2d");
 
+//Dá as características a um objeto 'ball' que representa uma bola no jogo
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -11,6 +14,7 @@ const ball = {
     color: "white"
 };
 
+// Define as raquetes e suas características
 const leftPaddle = {
     x: 0,
     y: canvas.height / 2 - 50,
@@ -29,11 +33,13 @@ const rightPaddle = {
     color: "white"
 };
 
+// Placar
 const scores = {
     left: 0,
     right: 0,
 };
 
+// Animação da exibição dos pontos dos players
 const player1PointAnimation = {
     active: false,
     duration: 1000,
@@ -50,6 +56,13 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
+
+const isGamePausedState = false;
+const gameState = {
+    isGamePaused: false,
+};
+
+//Caixa de end game com mensagem personalizada
 const exibirCaixaFimDeJogo = (mensagem) => {
     const gameOverBox = document.getElementById('gameOverBox');
     const gameOverMessage = document.getElementById('gameOverMessage');
@@ -57,17 +70,42 @@ const exibirCaixaFimDeJogo = (mensagem) => {
     gameOverBox.classList.remove('hidden');
 }
 
+//Função pra funcionar o som do clique em botões
 const playSomClique = () => {
     const somClique = document.getElementById("somClique");
     somClique.currentTime = 0;
     somClique.play();
 }
 
+//Função que faz o som da raquete funcionar
 const playSomRaquete = () => {
     const somRaquete = document.getElementById("somRaquete");
     somRaquete.currentTime = 0;
     somRaquete.play();
 }
+
+//Função que faz o som da pontuação
+const playSomPonto = () => {
+    const somPonto = document.getElementById('somPonto');
+    somPonto.currentTime = 0;
+    somPonto.play();
+}
+
+//Função pra o som da barra completamente cheia
+const playSomBarra = () => {
+    const somBarra = document.getElementById('somBarra');
+    somBarra.currentTime = 0;
+    somBarra.play();
+}
+
+//Função que faz o som da vitória de um dos players funcionar
+const playSomVitoria = () => {
+    const somVitoria = document.getElementById('somVitoria');
+    somVitoria.currentTime = 0;
+    somVitoria.play();
+}
+
+//Guarda a informação sobre a habilidade estar ativa em uma das raquetes ou se a bola entrou em contato com alguma
 const gameData = {
     isRedPaddle: false,
 };
@@ -78,6 +116,7 @@ const gamedatapad = {
     touchedredpad: false,
 };
 
+//Funcionalidade do enchimento da barra de habilidade das raquetes e também seu estilo
 const progressbardireita = document.querySelector('.progress-bardireita');
 const handleKeyPressdireita = (event) => {
     const progressValue = parseInt(progressbardireita.getAttribute('data-progress'))
@@ -93,6 +132,7 @@ const handleKeyPressdireita = (event) => {
 
 const progressbar = document.querySelector('.progress-baresquerda');
 
+// Verifica o progresso da barra de habilidade e a partir disso o funcionamento dos botôes X e O
 const handleKeyPress = (event) => {
     const progressValue = parseInt(progressbar.getAttribute('data-progress'))
     if (event.key === 'x' && progressValue === 100) {
@@ -108,6 +148,7 @@ const handleKeyPress = (event) => {
 document.addEventListener('keydown', handleKeyPress);
 document.addEventListener('keydown', handleKeyPressdireita);
 
+//Faz com que as barras de habilidade encham 20% até atingir o valor máximo de 100%
 const uploadesquerda = () => {
     const progressValue = parseInt(progressbar.getAttribute('data-progress')) || 0; 
     const newProgressValue = progressValue + 20; 
@@ -124,9 +165,12 @@ const uploaddireita = () => {
         progressbardireita.setAttribute('data-progress', newProgressValue.toString());
     } 
 };
+
+// Comprimento da barra em relação a possibilidade de porcentagem para encher
 const trailLength = 5;
 const trail = [];
 
+//Desenho da bola
 const drawBall = () => {
   trail.push({ x: ball.x, y: ball.y });
 
@@ -136,6 +180,7 @@ const drawBall = () => {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  //Desenha o rastro da bola após ser usada a habilidade
   const drawTrail = (point, index) => {
     const alpha = 1 - (index / trail.length);
     
@@ -159,6 +204,7 @@ const drawBall = () => {
   ctx.closePath();
 };
 
+//Desenho das raquetes
 const drawPaddles = () => {
     ctx.fillStyle = leftPaddle.color;
     ctx.fillRect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
@@ -167,6 +213,7 @@ const drawPaddles = () => {
     ctx.fillRect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
 }
 
+//Funcionamento das teclas de movimento
 const keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -186,7 +233,11 @@ document.addEventListener("keyup", function (e) {
     }
 });
 
+//Movimento da raquetae a ter a tecla pressionada, eixo Y 
 const movePaddles = () => {
+    if (gameState.isGamePaused) {
+        return;
+    }
     if (keys.ArrowUp && rightPaddle.y > 0) {
         rightPaddle.y -= rightPaddle.speed;
     }
@@ -202,14 +253,17 @@ const movePaddles = () => {
     }
 };
 
+//Função pra reiniciar o jogo
 const restartGame = () => {
     resetGame();
+    gameState.isGamePaused = false;
     jogo.classList.remove('fade-in');
     setTimeout(() => {
         gameLoop();
     }, 10);
 };
 
+//Definição do estado inicial ao qual a partida vai rtornar após ser reiniciada
 const resetGame = () => {
     scores.left = 0;
     scores.right = 0;
@@ -224,26 +278,33 @@ const resetGame = () => {
     gameOverBox.classList.add('hidden');
 }
 
+//Limite da pontuação
 const limiteDePontos = 10
 
+//Funcionamento de botão que reinicia a partida
 const reiniciarJogoBtn = document.getElementById('reiniciarJogo');
 
 reiniciarJogoBtn.addEventListener('click', () => {
-    restartGame();
-    playSomClique();
+    if (!gameState.isGamePaused) {
+        restartGame();
+        playSomClique();
+        updateGame();
+    }
 });
 
+//Botão para retornar a tela inicial após o fim da partida
 const voltarTelaInicialBtn = document.getElementById('voltarTelaInicial');
 
 voltarTelaInicialBtn.addEventListener('click', () => {
     document.getElementById('jogo').style.display = 'none';
     document.getElementById('telainicial').style.display = 'block';
-    resetGame();
+    restartGame();
     playSomClique();
     const gameOverBox = document.getElementById('gameOverBox');
     gameOverBox.classList.add('hidden');
 });
 
+//Ajuste da nova velocidade da bola após o uso da habilidade
 const updateBall = () => {
     ball.x += ball.speedX;
     ball.y += ball.speedY;
@@ -262,9 +323,9 @@ const updateBall = () => {
         const relativePosition = (ball.y - leftPaddle.y) / leftPaddle.height;
        
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = 5; 
+            ball.speedX = 5; // Velocidade normal no canto superior e inferior
         } else if (gameData.isRedPaddle) {
-            ball.speedX = 30; 
+            ball.speedX = 30; // Velocidade aumentada quando a raquete é vermelha
             ball.color = "red"
             gamedatapad.touchedredpad = true;
         } else {
@@ -285,9 +346,9 @@ const updateBall = () => {
         const relativePosition = (ball.y - rightPaddle.y) / rightPaddle.height;
 
         if (relativePosition < 0.30 || relativePosition > 0.70) {
-            ball.speedX = -5; 
+            ball.speedX = -5; // Velocidade normal no canto superior e inferior
         } else if (gameDatadireita.isRedPaddledireito) {
-            ball.speedX = -30; 
+            ball.speedX = -30;  // Velocidade aumentada quando a raquete é vermelha
             ball.color = "red"
             gamedatapad.touchedredpad = true;
         } else {
@@ -298,6 +359,7 @@ const updateBall = () => {
         playSomRaquete();
     }
 
+//Após atingir o limite de pontos, aparece a notificação do player vencedor
     if (ball.x + ball.radius > canvas.width) {
         scores.left++;
         if (scores.left >= limiteDePontos) {
@@ -323,6 +385,7 @@ const updateBall = () => {
     }
 }
 
+//Desenha a animaão dos pontos na tela
 const drawPointAnimation = () => {
     if (player1PointAnimation.active) {
         const currentTime = Date.now();
@@ -347,6 +410,7 @@ const drawPointAnimation = () => {
     }
 }
 
+// Animação para a pontuação de um dos players
 const activatePointAnimation = (player) => {
     if (player === 1) {
         player1PointAnimation.active = true;
@@ -356,6 +420,8 @@ const activatePointAnimation = (player) => {
         player2PointAnimation.startTime = Date.now();
     }
 }
+
+//Retorna as raquetes ao seu estado normal após o uso da habilidade
 const resetRedPaddle = () => {
     leftPaddle.color = "white";
     gameData.isRedPaddle = false;
@@ -371,7 +437,7 @@ const resetRedPaddledireito = () => {
     ball.color = "white"
 };
 
-
+// Reajusta a posição e velocidade da bola após um ponto marcado
 const resetBall = () => {
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
@@ -396,25 +462,100 @@ const resetBall = () => {
     }
 }
 
+// Design do placar
 const drawScore = () => {
     ctx.font = "30px Arial";
     ctx.fillText(scores.left, canvas.width / 4, 50);
     ctx.fillText(scores.right, (3 * canvas.width) / 4, 50);
 }
 
-const gameLoop = () => {
-    if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {return}
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    drawPaddles();
-    movePaddles();
-    updateBall();
-    drawScore();
-    drawPointAnimation();
-    requestAnimationFrame(gameLoop);
-}
+const frameDuration = 16;
 
+// Controla o ciclo de atualização e renderização do jogo
+const gameLoop = (timestamp) => {
+    if (!gameState.isGamePaused) {
+        const deltaTime = timestamp - (gameLoop.lastTimestamp || timestamp);
+        gameLoop.lastTimestamp = timestamp;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        updateBall();
+        movePaddles();
+        drawBall();
+        drawPaddles();
+        drawScore();
+        drawPointAnimation();
+        if (scores.left >= limiteDePontos || scores.right >= limiteDePontos) {
+        } else {
+            requestAnimationFrame(gameLoop);
+        }
+    }
+};
+
+//Definindo cada elemento 
+const pauseButton = document.getElementById('button3');
+const pauseDialog = document.getElementById('pauseDialog');
+const resumeButton = document.getElementById('resumeButton');
+const goToMainMenuButton = document.getElementById('goToMainMenuButton');
+
+//Verifica se o jogo está pausado e retorna o estado de pause 
+const isGamePaused = () => {
+    return isGamePausedState;
+};
+
+//Alterna o estado de pause do jogo entre pausado e execução e chama a função "updateGame" pra atualização do jogo
+const toggleGamePause = () => {
+    gameState.isGamePaused = !gameState.isGamePaused;
+    if (!gameState.isGamePaused) {
+        updateGame();
+    }
+};
+
+//Evento do potão pause
+pauseButton.addEventListener('click', () => {
+    pauseButtonHandler();
+});
+
+//Evento para continuar a execução do jogo
+resumeButton.addEventListener('click', () => {
+    if (gameState.isGamePaused) {
+        pauseDialog.style.display = 'none';
+        gameState.isGamePaused = false;
+        requestAnimationFrame(gameLoop);
+    }
+});;
+
+//Opção de retorno ao menu principal/tela inicial, "toggleGamePause" garante que o jogo continue pausado
+goToMainMenuButton.addEventListener('click', () => {
+    pauseDialog.style.display = 'none';
+    document.getElementById('jogo').style.display = 'none';
+    document.getElementById('telainicial').style.display = 'block';
+    toggleGamePause();
+});
+
+//Funcionamento do botão para que ele efetue a ação de pausar
+const pauseButtonHandler = () => {
+    gameState.isGamePaused = !gameState.isGamePaused;
+    if (!gameState.isGamePaused) {
+        pauseDialog.style.display = 'none';
+        requestAnimationFrame(gameLoop);
+    } else {
+        pauseDialog.style.display = 'block';
+    }
+};
+
+//Inicia o jogo e retira o estado de pause
+const startGame = () => {
+    gameState.isGamePaused = false;
+    restartGame();
+    playSomClique();
+    document.getElementById('telainicial').style.display = 'none';
+    jogo.style.display = 'block';
+    setTimeout(() => {
+        jogo.classList.add('fade-in');
+    }, 10);
+    updateGame();
+};
+
+// Botão jogar puxa a tela de jogo, saindo da tela inicial
 const jogo = document.getElementById('jogo');
 const botaoJogar = document.getElementById('button1');
 botaoJogar.addEventListener('click', () => {
@@ -424,9 +565,10 @@ botaoJogar.addEventListener('click', () => {
     setTimeout(() => {
         jogo.classList.add('fade-in');
     }, 10); 
-    gameLoop();
+    startGame();
 });
 
+// Funcionamento do botão tutorial
 const botaoTutorial = document.getElementById('button2');
 const modal = document.getElementById('tutorial');
 const closeModal = document.getElementById('close-tutorial');
