@@ -301,8 +301,23 @@ canvas {
     border: 3px outset orange;
   }
 
-  
+  #resumeButton {
+    background-image: url(../assets/images/firebutton.jpg);
+    border: 3px outset black;
+    cursor: pointer;
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 60px;
+    cursor: pointer;
+    left: 95px;
+    right: 0;
+    top: 80px;
+  }
 
+  #resumeButton:hover {
+    border: 3px outset orange;
+  }
 
 #voltarTelaInicial {
     background-image: url(../assets/images/firebutton.jpg);

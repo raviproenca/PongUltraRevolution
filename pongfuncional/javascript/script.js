@@ -56,6 +56,7 @@ const player2PointAnimation = {
     textColor: "red",
 };
 
+
 const isGamePausedState = false;
 const gameState = {
     isGamePaused: false,
