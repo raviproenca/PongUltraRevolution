@@ -1,61 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./styles/style.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./styles/style.css" rel="stylesheet" />
     <title>Pong Ultra Revolution</title>
+  </head>
 
-</head>
-<body>
-    <!--Elementos da tela inicial-->
-     <div id="telainicial">
-        <img src="./assets/images/title1.png" id="title1">
-        <img src="./assets/images/title2.gif" id="title2">
-        <img src="./assets/images/firevector.png" id="firebackground">
-        <button id="button1"><img src="./assets/images/Jogarbutton.png" width="220px;"></button>
-        <button id="button2"><img src="./assets/images/Instruçõesbutton.png" width="340px"></button>
-        <audio id="somClique" src="assets/sounds/somClique.mp3" preload="auto"></audio>
-    </div>
-    
-    <!--Elementos do jogo-->  
-    <div id="jogo" class="fade-in" style="display: none;">
-        <canvas id="pong" width="1150" height="600"></canvas>
-        <audio id="somRaquete" src="assets/sounds/somRaquete.mp3" preload="auto"></audio>
-        <button id="button3"><img src="./assets/images/botaopause.png" width="80px"></button>
+  <body>
+    <!-- Tela Inicial -->
+    <header id="telainicial">
+      <img src="./assets/images/title1.png" id="title1" alt="Título 1" />
+      <img src="./assets/images/title2.gif" id="title2" alt="Título 2" />
+      <img
+        src="./assets/images/firevector.png"
+        id="firebackground"
+        alt="Fundo de Fogo"
+      />
+      <nav>
+        <button id="button1" aria-label="Jogar">
+          <img
+            src="./assets/images/Jogarbutton.png"
+            width="220px"
+            alt="Botão Jogar"
+          />
+        </button>
+        <button id="button2" aria-label="Instruções">
+          <img
+            src="./assets/images/Instruçõesbutton.png"
+            width="340px"
+            alt="Botão Instruções"
+          />
+        </button>
+      </nav>
+      <audio
+        id="somClique"
+        src="assets/sounds/somClique.mp3"
+        preload="auto"
+      ></audio>
+    </header>
+
+    <!-- Elementos do Jogo -->
+    <main id="jogo" class="fade-in" style="display: none">
+      <canvas
+        id="pong"
+        width="1150"
+        height="600"
+        aria-label="Tela do jogo Pong"
+      ></canvas>
+      <audio
+        id="somRaquete"
+        src="assets/sounds/somRaquete.mp3"
+        preload="auto"
+      ></audio>
+
+      <button id="button3" aria-label="Pausar">
+        <img
+          src="./assets/images/botaopause.png"
+          width="80px"
+          alt="Botão Pausar"
+        />
+      </button>
+
+      <!-- Barras de Progresso -->
+      <div class="progress-container">
         <div class="bardireita">
-            <div class="progress-bardireita" data-progress="0"></div>
+          <div class="progress-bardireita" data-progress="0"></div>
         </div>
         <div class="baresquerda">
-            <div class="progress-baresquerda" data-progress="0"></div>
+          <div class="progress-baresquerda" data-progress="0"></div>
         </div>
-        <div id="pauseDialog" class="dialog hidden">
-            <p><img src="./assets/images/PauseTitle.png"></p>
-            <button id="resumeButton"><img src="./assets/images/continueButton.png" width="100%"></button>
-            <button id="goToMainMenuButton"><img src="./assets/images/backButton.png" width="100%"></button>
-        </div>
-    </div>
-    
-    <!--Box que surge ao clicar no botão tutorial-->
-    <div id="tutorial" class="modal">
-        <div class="modal-content">
-            <span class="close" id="close-tutorial">&times;</span>
-            <h1><img src="./assets/images/TutorialTitle.png"></h1>
-            <h2><img src="./assets/images/tutorial1.png"> <br> <br>
-                <img src="./assets/images/tutorial2.png"><br> <br>
-                <img src="./assets/images/tutorial3.png">
-            </h2>
-        </div>
-    </div>
+      </div>
 
-    <!--Código pra o funcionamento de todos os elementos HTML-->
-    <div id="gameOverBox" class="hidden">
-        <div id="gameOverMessage">Mensagem de Fim de Jogo</div>
-        <button id="reiniciarJogo"><img src="./assets/images/restartButton.png" width="85%"></button>
-        <button id="voltarTelaInicial"><img src="./assets/images/backButton.png" width="97%"></button>
-    </div>
+      <!-- Diálogo de Pause -->
+      <section
+        id="pauseDialog"
+        class="dialog hidden"
+        aria-labelledby="pauseTitle"
+      >
+        <h2 id="pauseTitle">
+          <img src="./assets/images/PauseTitle.png" alt="Título Pausar" />
+        </h2>
+        <button id="resumeButton" aria-label="Continuar">
+          <img
+            src="./assets/images/continueButton.png"
+            width="100%"
+            alt="Botão Continuar"
+          />
+        </button>
+        <button id="goToMainMenuButton" aria-label="Voltar ao Menu Principal">
+          <img
+            src="./assets/images/backButton.png"
+            width="100%"
+            alt="Botão Voltar"
+          />
+        </button>
+      </section>
+    </main>
+
+    <!-- Modal do Tutorial -->
+    <section id="tutorial" class="modal" aria-labelledby="tutorialTitle">
+      <div class="modal-content">
+        <button class="close" id="close-tutorial" aria-label="Fechar Tutorial">
+          &times;
+        </button>
+        <h1 id="tutorialTitle">
+          <img
+            src="./assets/images/TutorialTitle.png"
+            alt="Título do Tutorial"
+          />
+        </h1>
+        <article>
+          <img src="./assets/images/tutorial1.png" alt="Tutorial Etapa 1" />
+          <br /><br />
+          <img src="./assets/images/tutorial2.png" alt="Tutorial Etapa 2" />
+          <br /><br />
+          <img src="./assets/images/tutorial3.png" alt="Tutorial Etapa 3" />
+        </article>
+      </div>
+    </section>
+
+    <!-- Caixa de Fim de Jogo -->
+    <section id="gameOverBox" class="hidden" aria-labelledby="gameOverMessage">
+      <h2 id="gameOverMessage">Mensagem de Fim de Jogo</h2>
+      <button id="reiniciarJogo" aria-label="Reiniciar Jogo">
+        <img
+          src="./assets/images/restartButton.png"
+          width="85%"
+          alt="Botão Reiniciar"
+        />
+      </button>
+      <button id="voltarTelaInicial" aria-label="Voltar à Tela Inicial">
+        <img
+          src="./assets/images/backButton.png"
+          width="97%"
+          alt="Botão Voltar"
+        />
+      </button>
+    </section>
 
     <script src="./javascript/script.js"></script>
-        </body>
-
+  </body>
 </html>
