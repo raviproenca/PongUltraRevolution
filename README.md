@@ -1,6 +1,6 @@
 # PongUltraRevolution
 
-Recreation of the classic Pong game, developed during the Functional Programming course in the 1st semester of the Information Systems program at the Federal University of Sergipe. The project uses HTML, CSS, and pure JavaScript to replicate the essence of the original game with innovative additions.
+Recreation of the classic Pong game, developed during the Functional Programming course in the 1st semester of the Information Systems program at the Federal University of Sergipe. The project uses HTML, CSS, and Vanilla JavaScript to replicate the essence of the original game with innovative additions.
 
 Highlights:
 
